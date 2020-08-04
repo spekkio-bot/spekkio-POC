@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"github.com/spekkio-bot/spekkio/src/app"
 )
 
 func main() {
-	fmt.Println("Spekkio, the Master of War, comes to GitHub!")
+	app := &app.App{}
+	app.Run()
 }
