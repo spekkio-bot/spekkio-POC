@@ -6,10 +6,10 @@ import (
 )
 
 type App struct {
-
+	Config *AppConfig
 }
 
 func (a *App) Run() {
-	fmt.Printf("Serving on 127.0.0.1:2000.\n")
-	http.ListenAndServe("127.0.0.1:2000", nil)
+	fmt.Printf("Serving on %s.\n", a.Config.Server.GetAddr())
+	http.ListenAndServe(a.Config.Server.GetAddr(), nil)
 }
