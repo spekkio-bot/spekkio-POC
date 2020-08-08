@@ -5,9 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/justinas/alice"
 	_ "github.com/lib/pq"
+	"github.com/spekkio-bot/spekkio/src/app/controller"
 )
 
 type App struct {
@@ -18,7 +22,9 @@ type App struct {
 
 func (a *App) Run() {
 	fmt.Printf("Serving on %s.\n", a.Config.Server.GetAddr())
-	http.ListenAndServe(a.Config.Server.GetAddr(), nil)
+	originsOk := handlers.AllowedOrigins([]string{a.Config.AllowedOrigins})
+	chain := alice.New(handlers.CORS(originsOk)).Then(handlers.CombinedLoggingHandler(os.Stdout, a.Router))
+	http.ListenAndServe(a.Config.Server.GetAddr(), chain)
 }
 
 func (a *App) Initialize() {
@@ -56,5 +62,5 @@ func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
 }
 
 func (a *App) Ping(w http.ResponseWriter, r *http.Request) {
-
+	controller.Ping(w, r)
 }
