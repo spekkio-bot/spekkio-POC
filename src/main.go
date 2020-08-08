@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/spekkio-bot/spekkio/src/app"
 	"github.com/joho/godotenv"
+	"github.com/spekkio-bot/spekkio/src/app"
 )
 
 func LoadFromDotenv() {

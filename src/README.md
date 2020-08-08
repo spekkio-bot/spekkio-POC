@@ -6,6 +6,11 @@ This directory contains source code for the main Spekkio app.
 
 ```
 ├── app                             # App directory
+│   ├── controller                  # App controller
+│       ├── common.go               # Common controller functions
+│       ├── index.go                # Index route
+│   ├── model                       # App models
+│       ├── models.go               # Models for app data
 │   ├── app.go                      # Top-level app source code
 │   ├── config.go                   # Functions to configure the app
 ├── .env                            # Environmental variables
