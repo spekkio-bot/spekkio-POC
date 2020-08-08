@@ -20,5 +20,6 @@ func main() {
 		Config: &app.AppConfig{},
 	}
 	app.Config.Load()
+	app.Initialize()
 	app.Run()
 }
