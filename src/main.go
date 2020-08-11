@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/spekkio-bot/spekkio/src/app"
@@ -16,6 +17,8 @@ func LoadFromDotenv() {
 
 func main() {
 	LoadFromDotenv()
+	args := os.Args()
+
 	app := &app.App{
 		Config: &app.AppConfig{},
 	}
