@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/spekkio-bot/spekkio/src/app"
+	"github.com/spekkio-bot/spekkio/src/server"
 )
 
 func LoadFromDotenv() {
@@ -15,14 +15,23 @@ func LoadFromDotenv() {
 	}
 }
 
+func InvalidArgs() {
+	log.Fatal("err: invalid args\n")
+}
+
 func main() {
 	LoadFromDotenv()
-	args := os.Args()
-
-	app := &app.App{
-		Config: &app.AppConfig{},
+	args := os.Args
+	if len(args) == 1 {
+		log.Printf("no args selected - no action will be taken.\n")
+	} else if len(args) == 2 {
+		switch args[1] {
+		case "dev":
+			server.Start()
+		default:
+			InvalidArgs()
+		}
+	} else {
+		InvalidArgs()
 	}
-	app.Config.Load()
-	app.Initialize()
-	app.Run()
 }
