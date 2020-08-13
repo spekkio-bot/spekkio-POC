@@ -4,8 +4,10 @@ import (
 	"log"
 	"os"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/joho/godotenv"
 	"github.com/spekkio-bot/spekkio/src/server"
+	"github.com/spekkio-bot/spekkio/src/serverless"
 )
 
 func LoadFromDotenv() {
@@ -20,14 +22,14 @@ func InvalidArgs() {
 }
 
 func main() {
-	LoadFromDotenv()
 	args := os.Args
 	if len(args) == 1 {
-		log.Printf("no args selected - no action will be taken.\n")
+		LoadFromDotenv()
+		server.Run()
 	} else if len(args) == 2 {
 		switch args[1] {
-		case "dev":
-			server.Start()
+		case "lambda":
+			server.RunOnLambda()
 		default:
 			InvalidArgs()
 		}
