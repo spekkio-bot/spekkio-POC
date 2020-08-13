@@ -47,8 +47,8 @@ ORIGINS_ALLOWED=*             # if undefined, app defaults to no origins
 ### Build and run
 
 1. Run `go build main.go` to build your app.
-2. Run `./main` to execute your compiled program.
+2. Run `./main server` to execute your compiled program.
 
 ### Run without build
 
-1. Run `go run main.go` to run your app without building it.
+1. Run `go run main.go server` to run your app without building it.

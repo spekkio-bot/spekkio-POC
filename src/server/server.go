@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/davyzhang/agw"
 	"github.com/spekkio-bot/spekkio/src/app"
 )

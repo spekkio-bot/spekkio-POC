@@ -1,0 +1,22 @@
+service: spekkio-core
+
+provider:
+  name: aws
+  runtime: go1.x
+  memorySize: 128
+  timeout: 10
+  stage: api
+  region: us-west-1
+
+package:
+ exclude:
+   - ./**
+ include:
+   - ./bin/**
+
+functions:
+  api:
+    handler: bin/spekkio
+    events:
+      - http: ANY {proxy+}
+      - http: ANY /
