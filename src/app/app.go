@@ -1,12 +1,16 @@
 package app
 
 import (
+	//"context"
 	"database/sql"
+	//"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/davyzhang/agw"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/justinas/alice"
@@ -15,22 +19,39 @@ import (
 )
 
 type App struct {
-	Config *AppConfig
-	Db     *sql.DB
-	Router *mux.Router
+	Config  *AppConfig
+	Db      *sql.DB
+	Router  *mux.Router
+	Handler http.Handler
 }
 
 func (a *App) Run() {
-	fmt.Printf("Serving on %s.\n", a.Config.Server.GetAddr())
-	originsOk := handlers.AllowedOrigins([]string{a.Config.AllowedOrigins})
-	chain := alice.New(handlers.CORS(originsOk)).Then(handlers.CombinedLoggingHandler(os.Stdout, a.Router))
-	http.ListenAndServe(a.Config.Server.GetAddr(), chain)
+	switch (a.Config.Platform) {
+	case "default":
+		fmt.Printf("serving on %s.\n", a.Config.Server.GetAddr())
+		http.ListenAndServe(a.Config.Server.GetAddr(), a.Handler)
+	case "lambda":
+		fmt.Printf("running on aws lambda mode.\n")
+		lambda.Start(agw.Handler(a.Handler))
+		/*
+		lambda.Start(func() agw.GatewayHandler {
+			return func(ctx context.Context, event json.RawMessage) (interface{}, error) {
+				agp := agw.NewAPIGateParser(event)
+				return agw.Process(agp, a.Handler), nil
+			}
+		}())
+		*/
+	default:
+		log.Fatal("err: invalid platform option.\n")
+	}
 }
 
 func (a *App) Initialize() {
 	a.ConnectToDb()
 	a.Router = mux.NewRouter()
 	a.SetRoutes()
+	originsOk := handlers.AllowedOrigins([]string{a.Config.AllowedOrigins})
+	a.Handler = alice.New(handlers.CORS(originsOk)).Then(handlers.CombinedLoggingHandler(os.Stdout, a.Router))
 }
 
 func (a *App) ConnectToDb() {

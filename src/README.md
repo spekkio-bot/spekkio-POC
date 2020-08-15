@@ -37,6 +37,7 @@ DB_SSLMODE=prefer             # if undefined, app defaults to prefer
 # Dev server configuration
 HOST=127.0.0.1                # if undefined, app defaults to 127.0.0.1
 PORT=2000                     # if undefined, app defaults to 2000
+PLATFORM=default              # if undefined, app defaults to default
 
 # OPTIONAL: Allowed origins for CORS
 ORIGINS_ALLOWED=*             # if undefined, app defaults to no origins
@@ -47,8 +48,8 @@ ORIGINS_ALLOWED=*             # if undefined, app defaults to no origins
 ### Build and run
 
 1. Run `go build main.go` to build your app.
-2. Run `./main server` to execute your compiled program.
+2. Run `./main dev` to execute your compiled program.
 
 ### Run without build
 
-1. Run `go run main.go server` to run your app without building it.
+1. Run `go run main.go dev` to run your app without building it.

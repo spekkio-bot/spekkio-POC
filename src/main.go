@@ -22,10 +22,10 @@ func InvalidArgs() {
 func main() {
 	args := os.Args
 	if len(args) == 1 {
-		server.RunOnLambda()
+		server.Run()
 	} else if len(args) == 2 {
 		switch args[1] {
-		case "server":
+		case "dev":
 			LoadFromDotenv()
 			server.Run()
 		default:
