@@ -3,16 +3,14 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/davyzhang/agw"
 )
 
 func sendJson(w http.ResponseWriter, status int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
-		return
+		agw.WriteResponse(w, []byte(err.Error()), false)
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-	w.Write([]byte(response))
+	agw.WriteResponse(w, []byte(response), false)
 }

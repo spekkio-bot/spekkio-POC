@@ -1,5 +1,5 @@
 package model
 
 type Ping struct {
-	Message string
+	Message string `json:"message"`
 }

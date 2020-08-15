@@ -1,9 +1,7 @@
 package app
 
 import (
-	//"context"
 	"database/sql"
-	//"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -29,18 +27,14 @@ func (a *App) Run() {
 	switch (a.Config.Platform) {
 	case "default":
 		fmt.Printf("serving on %s.\n", a.Config.Server.GetAddr())
-		http.ListenAndServe(a.Config.Server.GetAddr(), a.Handler)
+		srv := &http.Server{
+			Handler: a.Router,
+			Addr:    a.Config.Server.GetAddr(),
+		}
+		log.Fatal(srv.ListenAndServe())
 	case "lambda":
 		fmt.Printf("running on aws lambda mode.\n")
-		lambda.Start(agw.Handler(a.Handler))
-		/*
-		lambda.Start(func() agw.GatewayHandler {
-			return func(ctx context.Context, event json.RawMessage) (interface{}, error) {
-				agp := agw.NewAPIGateParser(event)
-				return agw.Process(agp, a.Handler), nil
-			}
-		}())
-		*/
+		lambda.Start(agw.Handler(a.Router))
 	default:
 		log.Fatal("err: invalid platform option.\n")
 	}
