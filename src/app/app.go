@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
+	//"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/davyzhang/agw"
-	"github.com/gorilla/handlers"
+	//"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"github.com/justinas/alice"
+	//"github.com/justinas/alice"
 	_ "github.com/lib/pq"
 	"github.com/spekkio-bot/spekkio/src/app/controller"
 )
@@ -20,7 +20,7 @@ type App struct {
 	Config  *AppConfig
 	Db      *sql.DB
 	Router  *mux.Router
-	Handler http.Handler
+	//Handler http.Handler
 }
 
 func (a *App) Run() {
@@ -44,8 +44,8 @@ func (a *App) Initialize() {
 	a.ConnectToDb()
 	a.Router = mux.NewRouter()
 	a.SetRoutes()
-	originsOk := handlers.AllowedOrigins([]string{a.Config.AllowedOrigins})
-	a.Handler = alice.New(handlers.CORS(originsOk)).Then(handlers.CombinedLoggingHandler(os.Stdout, a.Router))
+	//originsOk := handlers.AllowedOrigins([]string{a.Config.AllowedOrigins})
+	//a.Handler = alice.New(handlers.CORS(originsOk)).Then(handlers.CombinedLoggingHandler(os.Stdout, a.Router))
 }
 
 func (a *App) ConnectToDb() {
