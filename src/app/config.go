@@ -9,6 +9,7 @@ type AppConfig struct {
 	Database       *DatabaseConfig
 	Server         *ServerConfig
 	AllowedOrigins string
+	Platform       string
 }
 
 type DatabaseConfig struct {
@@ -41,6 +42,7 @@ func (ac *AppConfig) Load() {
 	}
 
 	ac.AllowedOrigins = os.Getenv("ORIGINS_ALLOWED")
+	ac.Platform = os.Getenv("PLATFORM")
 
 	if len(ac.Server.Host) == 0 {
 		ac.Server.Host = "127.0.0.1"
@@ -52,6 +54,10 @@ func (ac *AppConfig) Load() {
 
 	if len(ac.AllowedOrigins) == 0 {
 		ac.AllowedOrigins = ""
+	}
+
+	if len(ac.Platform) == 0 {
+		ac.Platform = "default"
 	}
 
 	if len(ac.Database.SslMode) == 0 {

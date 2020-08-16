@@ -7,12 +7,15 @@ This directory contains source code for the main Spekkio app.
 ```
 ├── app                             # App directory
 │   ├── controller                  # App controller
-│       ├── common.go               # Common controller functions
-│       ├── index.go                # Index route
+│   │   ├── common.go               # Common controller functions
+│   │   ├── index.go                # Index route
+│   │   ├── notfound.go             # 404 handler
 │   ├── model                       # App models
-│       ├── models.go               # Models for app data
+│   │   ├── models.go               # Models for app data
 │   ├── app.go                      # Top-level app source code
 │   ├── config.go                   # Functions to configure the app
+├── server                          # Server directory
+│   ├── server.go                   # Serves the app
 ├── .env                            # Environmental variables
 ├── main.go                         # Main script
 ```
@@ -37,6 +40,7 @@ DB_SSLMODE=prefer             # if undefined, app defaults to prefer
 # Dev server configuration
 HOST=127.0.0.1                # if undefined, app defaults to 127.0.0.1
 PORT=2000                     # if undefined, app defaults to 2000
+PLATFORM=default              # if undefined, app defaults to default
 
 # OPTIONAL: Allowed origins for CORS
 ORIGINS_ALLOWED=*             # if undefined, app defaults to no origins
@@ -47,8 +51,8 @@ ORIGINS_ALLOWED=*             # if undefined, app defaults to no origins
 ### Build and run
 
 1. Run `go build main.go` to build your app.
-2. Run `./main` to execute your compiled program.
+2. Run `./main dev` to execute your compiled program.
 
 ### Run without build
 
-1. Run `go run main.go` to run your app without building it.
+1. Run `go run main.go dev` to run your app without building it.
