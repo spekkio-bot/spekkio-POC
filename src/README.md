@@ -14,8 +14,6 @@ This directory contains source code for the main Spekkio app.
 │   │   ├── models.go               # Models for app data
 │   ├── app.go                      # Top-level app source code
 │   ├── config.go                   # Functions to configure the app
-├── server                          # Server directory
-│   ├── server.go                   # Serves the app
 ├── .env                            # Environmental variables
 ├── main.go                         # Main script
 ```
