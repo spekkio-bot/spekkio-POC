@@ -16,6 +16,7 @@ import (
 	"github.com/spekkio-bot/spekkio/src/app/controller"
 )
 
+// App defines the various components of the app.
 type App struct {
 	Config  *AppConfig
 	Db      *sql.DB
@@ -23,6 +24,7 @@ type App struct {
 	//Handler http.Handler
 }
 
+// Run will run the app depending on what platform it is configured to run on.
 func (a *App) Run() {
 	switch (a.Config.Platform) {
 	case "default":
@@ -40,6 +42,8 @@ func (a *App) Run() {
 	}
 }
 
+// Initialize will create the various components of the app needed to run it from a.Config.
+// The app can be configured with a.Config.Load().
 func (a *App) Initialize() {
 	a.ConnectToDb()
 	a.Router = mux.NewRouter()
@@ -48,6 +52,7 @@ func (a *App) Initialize() {
 	//a.Handler = alice.New(handlers.CORS(originsOk)).Then(handlers.CombinedLoggingHandler(os.Stdout, a.Router))
 }
 
+// ConnectToDb will connect the app to the database specified by a.Config.
 func (a *App) ConnectToDb() {
 	var err error
 
@@ -68,15 +73,18 @@ func (a *App) ConnectToDb() {
 	}
 }
 
+// SetRoutes will initialize all the routes of the app.
 func (a *App) SetRoutes() {
 	a.Get("/", a.Ping)
 	a.Router.NotFoundHandler = http.HandlerFunc(controller.NotFound)
 }
 
+// Get is a wrapper for resources requested with GET.
 func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
 	a.Router.HandleFunc(path, f).Methods("GET")
 }
 
+// Ping calls the Ping controller.
 func (a *App) Ping(w http.ResponseWriter, r *http.Request) {
 	controller.Ping(w, r)
 }
