@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// AppConfig defines the settings of the app that can be configured.
 type AppConfig struct {
 	Database       *DatabaseConfig
 	Server         *ServerConfig
@@ -12,6 +13,8 @@ type AppConfig struct {
 	Platform       string
 }
 
+// DatabaseConfig defines the parameters needed to connect to a database.
+// Currently, only Postgres databases are supported.
 type DatabaseConfig struct {
 	Host     string
 	Port     string
@@ -21,11 +24,13 @@ type DatabaseConfig struct {
 	SslMode  string
 }
 
+// ServerConfig defines the parameters needed to serve the app on an IPv4 interface.
 type ServerConfig struct {
 	Host string
 	Port string
 }
 
+// Load will load environmental variables into AppConfig and set default values where applicable.
 func (ac *AppConfig) Load() {
 	ac.Server = &ServerConfig{
 		Host: os.Getenv("HOST"),
@@ -65,10 +70,12 @@ func (ac *AppConfig) Load() {
 	}
 }
 
+// GetAddr returns the full IPv4 interface defined in ServerConfig.
 func (sc *ServerConfig) GetAddr() string {
 	return fmt.Sprintf("%s:%s", sc.Host, sc.Port)
 }
 
+// GetInfo returns the parameters defined in DatabaseConfig.
 func (dc *DatabaseConfig) GetInfo() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		dc.Host,
