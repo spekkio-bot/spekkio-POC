@@ -2,6 +2,17 @@
 
 Version log for Spekkio.
 
+## 0.1.0
+### New
+- App can run on traditional server or AWS Lambda (configurable)
+- App now has a 404 handler
+- Shell scripts added to deploy and run the app
+### Modified
+- Additional levels of abstraction added to app directory structure
+- HTTP handlers slightly modified to support both default and AWS Lambda platforms
+### Removed
+- Alice logging / middleware temporarily disabled
+
 ## 0.0.1
 ### New
 - App now has an index route
