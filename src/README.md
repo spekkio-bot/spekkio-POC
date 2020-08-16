@@ -7,12 +7,15 @@ This directory contains source code for the main Spekkio app.
 ```
 ├── app                             # App directory
 │   ├── controller                  # App controller
-│       ├── common.go               # Common controller functions
-│       ├── index.go                # Index route
+│   │   ├── common.go               # Common controller functions
+│   │   ├── index.go                # Index route
+│   │   ├── notfound.go             # 404 handler
 │   ├── model                       # App models
-│       ├── models.go               # Models for app data
+│   │   ├── models.go               # Models for app data
 │   ├── app.go                      # Top-level app source code
 │   ├── config.go                   # Functions to configure the app
+├── server                          # Server directory
+│   ├── server.go                   # Serves the app
 ├── .env                            # Environmental variables
 ├── main.go                         # Main script
 ```
