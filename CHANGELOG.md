@@ -2,6 +2,13 @@
 
 Version log for Spekkio.
 
+## 0.1.1
+### Modified
+- Added comments to exported functions to suppress warnings from golint
+- Unexported functions formerly in server package (now in main)
+### Removed
+- Removed server package and combined it into main
+
 ## 0.1.0
 ### New
 - App can run on traditional server or AWS Lambda (configurable)
