@@ -70,6 +70,7 @@ func (a *App) ConnectToDb() {
 
 func (a *App) SetRoutes() {
 	a.Get("/", a.Ping)
+	a.Router.NotFoundHandler = http.HandlerFunc(controller.NotFound)
 }
 
 func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
