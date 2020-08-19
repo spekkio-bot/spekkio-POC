@@ -4,36 +4,29 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
-	//"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/davyzhang/agw"
-	//"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	//"github.com/justinas/alice"
 	_ "github.com/lib/pq"
 	"github.com/spekkio-bot/spekkio/src/app/controller"
 )
 
 // App defines the various components of the app.
 type App struct {
-	Config  *AppConfig
-	Db      *sql.DB
-	Router  *mux.Router
-	//Handler http.Handler
+	Config *AppConfig
+	Db     *sql.DB
+	Router *mux.Router
 }
 
 // Run will run the app depending on what platform it is configured to run on.
 func (a *App) Run() {
-	switch (a.Config.Platform) {
+	switch a.Config.Platform {
 	case "default":
 		fmt.Printf("serving on %s.\n", a.Config.Server.GetAddr())
-		srv := &http.Server{
-			Handler: a.Router,
-			Addr:    a.Config.Server.GetAddr(),
-		}
-		log.Fatal(srv.ListenAndServe())
+		log.Fatal(http.ListenAndServe(a.Config.Server.GetAddr(), a.Router))
 	case "lambda":
 		fmt.Printf("running on aws lambda mode.\n")
 		lambda.Start(agw.Handler(a.Router))
@@ -48,8 +41,7 @@ func (a *App) Initialize() {
 	a.ConnectToDb()
 	a.Router = mux.NewRouter()
 	a.SetRoutes()
-	//originsOk := handlers.AllowedOrigins([]string{a.Config.AllowedOrigins})
-	//a.Handler = alice.New(handlers.CORS(originsOk)).Then(handlers.CombinedLoggingHandler(os.Stdout, a.Router))
+	a.SetMiddleware()
 }
 
 // ConnectToDb will connect the app to the database specified by a.Config.
@@ -79,6 +71,11 @@ func (a *App) SetRoutes() {
 	a.Router.NotFoundHandler = http.HandlerFunc(controller.NotFound)
 }
 
+// SetMiddleware will initialize middleware handlers for the router.
+func (a *App) SetMiddleware() {
+	a.Router.Use(logger)
+}
+
 // Get is a wrapper for resources requested with GET.
 func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
 	a.Router.HandleFunc(path, f).Methods("GET")
@@ -87,4 +84,15 @@ func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
 // Ping calls the Ping controller.
 func (a *App) Ping(w http.ResponseWriter, r *http.Request) {
 	controller.Ping(w, r)
+}
+
+func logger(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ip, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			ip = "N/A"
+		}
+		log.Printf("%s - - \"%s %s\"", ip, r.Method, r.RequestURI)
+		handler.ServeHTTP(w, r)
+	})
 }
