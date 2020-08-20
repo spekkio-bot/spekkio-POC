@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"net"
 	"net/http"
 
 	"github.com/aws/aws-lambda-go/lambda"
@@ -84,15 +83,4 @@ func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
 // Ping calls the Ping controller.
 func (a *App) Ping(w http.ResponseWriter, r *http.Request) {
 	controller.Ping(w, r)
-}
-
-func logger(handler http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ip, _, err := net.SplitHostPort(r.RemoteAddr)
-		if err != nil {
-			ip = "N/A"
-		}
-		log.Printf("%s - - \"%s %s\"", ip, r.Method, r.RequestURI)
-		handler.ServeHTTP(w, r)
-	})
 }
