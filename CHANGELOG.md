@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.1.2
+### New
+- Added middleware to log request info
+
 ## 0.1.1
 ### Modified
 - Added comments to exported functions to suppress warnings from golint
