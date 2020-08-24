@@ -26,7 +26,7 @@ func logger(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ip, _, err := net.SplitHostPort(r.RemoteAddr)
 		if err != nil {
-			ip = "N/A"
+			ip = "-"
 		}
 
 		handler.ServeHTTP(w, r)
@@ -36,6 +36,6 @@ func logger(handler http.Handler) http.Handler {
 
 		status := lrw.statusCode
 		*/
-		log.Printf("- %s \"%s %s %s\"", ip, r.Method, r.RequestURI, r.Proto)
+		log.Printf("%s \"%s %s %s\"", ip, r.Method, r.RequestURI, r.Proto)
 	})
 }
