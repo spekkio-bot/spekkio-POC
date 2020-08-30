@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.1.3
+### New
+- Added Scrumify route / controller.
+
 ## 0.1.2
 ### New
 - Added middleware to log request info
