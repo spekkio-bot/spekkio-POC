@@ -10,6 +10,7 @@ This directory contains source code for the main Spekkio app.
 │   │   ├── common.go               # Common controller functions
 │   │   ├── index.go                # Index route
 │   │   ├── notfound.go             # 404 handler
+│   │   ├── scrumify.go             # Scrumify route
 │   ├── model                       # App models
 │   │   ├── models.go               # Models for app data
 │   ├── app.go                      # Top-level app source code
