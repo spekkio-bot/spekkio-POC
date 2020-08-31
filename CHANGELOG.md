@@ -2,10 +2,11 @@
 
 Version log for Spekkio.
 
-## 0.1.3
+## 0.2.0
 ### New
-- Added Scrumify route / controller.
+- Added Scrumify route / controller
 - Added ScrumifyRequest struct to models
+- Added queries for Scrumify
 ### Modified
 - Enhanced Error response struct in models
 

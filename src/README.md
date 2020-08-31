@@ -16,6 +16,7 @@ This directory contains source code for the main Spekkio app.
 │   ├── app.go                      # Top-level app source code
 │   ├── middleware.go               # Middleware for app handlers
 │   ├── config.go                   # Functions to configure the app
+├── queries                         # SQL queries to be used by the app
 ├── .env                            # Environmental variables
 ├── main.go                         # Main script
 ```
