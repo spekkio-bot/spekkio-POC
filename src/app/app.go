@@ -93,5 +93,5 @@ func (a *App) Ping(w http.ResponseWriter, r *http.Request) {
 
 // Scrumify calls the Scrumify controller.
 func (a *App) Scrumify(w http.ResponseWriter, r *http.Request) {
-	controller.Scrumify(w, r)
+	controller.Scrumify(a.Db, w, r)
 }
