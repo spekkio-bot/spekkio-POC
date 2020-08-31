@@ -6,6 +6,12 @@
 
 Spekkio is a set of tools and services that delivers a better developer experience to teams on GitHub by automating tedious things.
 
+## Related Repositories
+
+Listed below are related repositories for Spekkio:
+- [Command Line Interface](https://github.com/spekkio-bot/spekkio-cli)
+- [Database Schema](https://github.com/spekkio-bot/spekkio-dbschema)
+
 ## Available Scripts
 
 ### `run.sh`

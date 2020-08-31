@@ -8,6 +8,7 @@ Version log for Spekkio.
 - Added ScrumifyRequest struct to models
 - Added queries for Scrumify
 - Added POST handler wrapper
+- Added links to related repositories to README
 ### Modified
 - Enhanced Error response struct in models
 
