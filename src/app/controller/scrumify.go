@@ -3,12 +3,14 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/spekkio-bot/spekkio/src/app/model"
+	"github.com/spekkio-bot/spekkio/src/queries/graphql"
 )
 
-const SCRUMIFY_QUERY = "queries/get_scrumify_labels.sql"
+const SCRUMIFY_QUERY = "queries/sql/get_scrumify_labels.sql"
 
 // Scrumify sets up a GitHub repository's Issues to facilitate scrum-driven development.
 func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
@@ -83,6 +85,74 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 		}
 		labels = append(labels, label)
 	}
+
+	mutations := make([]interface{}, len(labels))
+
+	for id, label := range labels {
+		mutationInputs := []gqlbuilder.MutationInput{}
+		mutationInputs = append(mutationInputs, gqlbuilder.MutationInput{
+			Key:   "repositoryId",
+			Value: req.RepoID,
+		})
+		mutationInputs = append(mutationInputs, gqlbuilder.MutationInput{
+			Key:   "name",
+			Value: label.Name,
+		})
+		mutationInputs = append(mutationInputs, gqlbuilder.MutationInput{
+			Key:   "color",
+			Value: label.Color,
+		})
+		mutationInputs = append(mutationInputs, gqlbuilder.MutationInput{
+			Key:   "description",
+			Value: label.Description,
+		})
+		mutation := &gqlbuilder.Mutation{
+			Name:   "createLabel",
+			Alias:  fmt.Sprintf("cl%d", id),
+			Inputs: mutationInputs,
+			Return: []string{"clientMutationId"},
+		}
+		mutations[id] = *mutation
+	}
+
+	gql := &gqlbuilder.Operation{
+		Name:       "Scrumify",
+		Type:       "mutation",
+		Operations: mutations,
+	}
+
+	gqlQuery, err := gql.Build()
+	if err != nil {
+		res := model.Error{
+			Message: "GRRRR... That was most embarrassing!",
+			Error:   err.Error(),
+		}
+		sendJson(w, http.StatusInternalServerError, res)
+		return
+	}
+
+	var apiReq *http.Request
+	var apiResp *http.Response
+	apiClient := &http.Client{}
+	tokenHeader := fmt.Sprintf("bearer %s", req.Token)
+
+	apiReq, err = http.NewRequest("POST", GRAPHQL_API, gqlQuery)
+	apiReq.Header.Add("Authorization", tokenHeader)
+	apiReq.Header.Add("Accept", LABEL_PREVIEW_HEADER)
+	apiReq.Header.Add("Content-Type", "application/json")
+
+	apiResp, err = apiClient.Do(apiReq)
+	if err != nil {
+		res := model.Error{
+			Message: "GRRRR... That was most embarrassing!",
+			Error:   err.Error(),
+		}
+		sendJson(w, http.StatusInternalServerError, res)
+		return
+	}
+
+	// TODO: handle various api responses
+	fmt.Println(apiResp.Status)
 
 	res := model.Ping{
 		Message: "Ipso facto, meeny moe... MAGICO! Your repository was successfully scrumified!",

@@ -5,6 +5,11 @@ type Ping struct {
 	Message string `json:"message"`
 }
 
+// GraphQLRequest dictates how GraphQL requests should be structured (duh).
+type GraphQLRequest struct {
+	Query string `json:"query"`
+}
+
 // ScrumifyRequest dictates how the request body of the Scrumify resource should be structured.
 type ScrumifyRequest struct {
 	Token  string `json:"token"`

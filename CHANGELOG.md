@@ -10,6 +10,7 @@ Version log for Spekkio.
 - Added POST handler wrapper
 - Added links to related repositories to README
 - Added latest version badge to README
+- Added GraphQL query builder
 ### Modified
 - Enhanced Error response struct in models
 
