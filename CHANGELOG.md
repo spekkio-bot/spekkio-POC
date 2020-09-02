@@ -8,9 +8,10 @@ Version log for Spekkio.
 - Added ScrumifyRequest struct to models
 - Added queries for Scrumify
 - Added POST handler wrapper
+- Added GraphQL query builder
 - Added links to related repositories to README
 - Added latest version badge to README
-- Added GraphQL query builder
+- Deploy shell script now copies queries to build directory
 ### Modified
 - Enhanced Error response struct in models
 
