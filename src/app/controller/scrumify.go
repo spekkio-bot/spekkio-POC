@@ -46,20 +46,20 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	var query string
 	scrumifyQueryProps := &sqlbuilder.SelectQueryProps{
 		BaseTable: "ScrumifyLabels",
-		Columns:   []sqlbuilder.Column{
-			sqlbuilder.Column{
+		Columns: []sqlbuilder.Column{
+			{
 				Name:  "id",
 				Alias: "",
 			},
-			sqlbuilder.Column{
+			{
 				Name:  "name",
 				Alias: "",
 			},
-			sqlbuilder.Column{
+			{
 				Name:  "color",
 				Alias: "",
 			},
-			sqlbuilder.Column{
+			{
 				Name:  "description",
 				Alias: "",
 			},

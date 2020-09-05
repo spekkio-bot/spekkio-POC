@@ -10,7 +10,7 @@ import (
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	res := model.Error{
 		Message: "No cheating! I'm watching you!",
-		Error: "resource not found.",
+		Error:   "resource not found.",
 	}
 
 	sendJson(w, http.StatusNotFound, res)

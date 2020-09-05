@@ -31,10 +31,10 @@ func logger(handler http.Handler) http.Handler {
 
 		handler.ServeHTTP(w, r)
 		/*
-		lrw := NewLoggingResponseWriter(w)
-		handler.ServeHTTP(lrw, r)
+			lrw := NewLoggingResponseWriter(w)
+			handler.ServeHTTP(lrw, r)
 
-		status := lrw.statusCode
+			status := lrw.statusCode
 		*/
 		log.Printf("%s \"%s %s %s\"", ip, r.Method, r.RequestURI, r.Proto)
 	})
