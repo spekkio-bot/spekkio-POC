@@ -86,7 +86,7 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 		labels = append(labels, label)
 	}
 
-	mutations := make([]interface{}, len(labels))
+	mutations := []gqlbuilder.Mutation{}
 
 	for id, label := range labels {
 		mutationInputs := []gqlbuilder.MutationInput{}
@@ -112,13 +112,12 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 			Inputs: mutationInputs,
 			Return: []string{"clientMutationId"},
 		}
-		mutations[id] = *mutation
+		mutations = append(mutations, *mutation)
 	}
 
-	gql := &gqlbuilder.Operation{
-		Name:       "Scrumify",
-		Type:       "mutation",
-		Operations: mutations,
+	gql := &gqlbuilder.Mutations{
+		Name:      "Scrumify",
+		Mutations: mutations,
 	}
 
 	gqlQuery, err := gql.Build()
