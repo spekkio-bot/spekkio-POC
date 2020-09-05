@@ -1,10 +1,17 @@
 # Spekkio
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/spekkio-bot/spekkio?label=latest)](https://github.com/spekkio-bot/spekkio/tags)
 [![Server status](https://img.shields.io/website?down_color=red&down_message=offline&label=server&up_message=online&url=https%3A%2F%2Fjunha.netlify.com)](https://5ila6fw37k.execute-api.us-west-1.amazonaws.com/api)
 [![Go Report Card](https://goreportcard.com/badge/github.com/spekkio-bot/spekkio)](https://goreportcard.com/report/github.com/spekkio-bot/spekkio)
 
 *"I'm Spekkio, the Master of ~War~ GitHub!"*
 
 Spekkio is a set of tools and services that delivers a better developer experience to teams on GitHub by automating tedious things.
+
+## Related Repositories
+
+Listed below are related repositories for Spekkio:
+- [Command Line Interface](https://github.com/spekkio-bot/spekkio-cli)
+- [Database Schema](https://github.com/spekkio-bot/spekkio-dbschema)
 
 ## Available Scripts
 

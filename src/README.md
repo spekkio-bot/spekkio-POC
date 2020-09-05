@@ -5,18 +5,25 @@ This directory contains source code for the main Spekkio app.
 ## Contents
 
 ```
-├── app                             # App directory
-│   ├── controller                  # App controller
-│   │   ├── common.go               # Common controller functions
-│   │   ├── index.go                # Index route
-│   │   ├── notfound.go             # 404 handler
-│   ├── model                       # App models
-│   │   ├── models.go               # Models for app data
-│   ├── app.go                      # Top-level app source code
-│   ├── middleware.go               # Middleware for app handlers
-│   ├── config.go                   # Functions to configure the app
-├── .env                            # Environmental variables
-├── main.go                         # Main script
+├── app                               # App directory
+│   ├── controller                    # App controller
+│   │   ├── common.go                 # Common controller functions
+│   │   ├── index.go                  # Index route
+│   │   ├── notfound.go               # 404 handler
+│   │   ├── scrumify.go               # Scrumify route
+│   ├── model                         # App models
+│   │   ├── models.go                 # Models for app data
+│   ├── app.go                        # Top-level app source code
+│   ├── middleware.go                 # Middleware for app handlers
+│   ├── config.go                     # Functions to configure the app
+├── queries                           # Queries to be used by the app
+│   ├── graphql
+│   │   ├── gqlbuilder.go             # GraphQL query / mutation builder
+│   │   ├── gqlbuilder_test.go        # Tests for gqlbuilder.go
+│   ├── sql
+│   │   ├── get_scrumify_labels.sql   # Query labels to add via Scrumify
+├── .env                              # Environmental variables
+├── main.go                           # Main script
 ```
 
 ## First Time Setup
