@@ -8,9 +8,8 @@ import (
 
 	"github.com/spekkio-bot/spekkio/src/app/model"
 	"github.com/spekkio-bot/spekkio/src/queries/graphql"
+	"github.com/spekkio-bot/spekkio/src/queries/sql"
 )
-
-const SCRUMIFY_QUERY = "queries/sql/get_scrumify_labels.sql"
 
 // Scrumify sets up a GitHub repository's Issues to facilitate scrum-driven development.
 func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
@@ -45,7 +44,28 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	}
 
 	var query string
-	query, err = getSqlFrom(SCRUMIFY_QUERY)
+	scrumifyQueryProps := &sqlbuilder.SelectQueryProps{
+		BaseTable: "ScrumifyLabels",
+		Columns:   []sqlbuilder.Column{
+			sqlbuilder.Column{
+				Name:  "id",
+				Alias: "",
+			},
+			sqlbuilder.Column{
+				Name:  "name",
+				Alias: "",
+			},
+			sqlbuilder.Column{
+				Name:  "color",
+				Alias: "",
+			},
+			sqlbuilder.Column{
+				Name:  "description",
+				Alias: "",
+			},
+		},
+	}
+	query, err = scrumifyQueryProps.BuildQuery()
 	if err != nil {
 		res := model.Error{
 			Message: "GRRRR... That was most embarrassing!",
