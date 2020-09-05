@@ -14,11 +14,11 @@ func TestMutationBuilder(t *testing.T) {
 		Name:  "testMutation",
 		Alias: "testAlias",
 		Inputs: []MutationInput{
-			MutationInput{
+			{
 				Key:   "testFieldOne",
 				Value: "1080",
 			},
-			MutationInput{
+			{
 				Key:   "testFieldTwo",
 				Value: "2080",
 			},
@@ -30,11 +30,11 @@ func TestMutationBuilder(t *testing.T) {
 		Name:  "testMutation",
 		Alias: "testAnotherAlias",
 		Inputs: []MutationInput{
-			MutationInput{
+			{
 				Key:   "testFieldOne",
 				Value: "3080",
 			},
-			MutationInput{
+			{
 				Key:   "testFieldTwo",
 				Value: "3090",
 			},
@@ -46,7 +46,7 @@ func TestMutationBuilder(t *testing.T) {
 		Name:  "testNoAliasMutation",
 		Alias: "",
 		Inputs: []MutationInput{
-			MutationInput{
+			{
 				Key:   "singleTestInput",
 				Value: "980",
 			},

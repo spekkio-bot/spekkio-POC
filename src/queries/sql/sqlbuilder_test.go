@@ -7,12 +7,12 @@ import (
 func TestSelectQueryBuilder(t *testing.T) {
 	testProps := &SelectQueryProps{
 		BaseTable: "TestTable",
-		Columns:   []Column{
-			Column{
+		Columns: []Column{
+			{
 				Name:  "TestColumn",
 				Alias: "",
 			},
-			Column{
+			{
 				Name:  "TestColumnWithAlias",
 				Alias: "AliasWorks",
 			},
@@ -32,8 +32,8 @@ func TestSelectQueryBuilder(t *testing.T) {
 func TestSelectQueryBuilderEmptyColumnError(t *testing.T) {
 	testProps := &SelectQueryProps{
 		BaseTable: "TestTableEmptyColumn",
-		Columns:   []Column{
-			Column{
+		Columns: []Column{
+			{
 				Name:  "",
 				Alias: "",
 			},

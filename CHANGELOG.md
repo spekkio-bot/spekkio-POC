@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.2
+### Modified
+- Fixed errors / warnings thrown by `gofmt -s` and `golint` on `v0.2.1`
+
 ## 0.2.1
 ### New
 - Added SQL query builder

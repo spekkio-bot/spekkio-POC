@@ -8,7 +8,10 @@ import (
 	"github.com/davyzhang/agw"
 )
 
+// GRAPHQL_API is the URL to GitHub's GraphQL API
 const GRAPHQL_API = "https://api.github.com/graphql"
+
+// LABEL_PREVIEW_HEADER is an Accept header value added to an HTTP request that allows access to GitHub's GraphQL Label Preview APIs
 const LABEL_PREVIEW_HEADER = "application/vnd.github.bane-preview+json"
 
 func sendJson(w http.ResponseWriter, status int, payload interface{}) {
