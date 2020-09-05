@@ -19,9 +19,10 @@ This directory contains source code for the main Spekkio app.
 ├── queries                           # Queries to be used by the app
 │   ├── graphql
 │   │   ├── gqlbuilder.go             # GraphQL query / mutation builder
-│   │   ├── gqlbuilder_test.go        # Tests for gqlbuilder.go
+│   │   ├── gqlbuilder_test.go        # Tests for gqlbuilder package
 │   ├── sql
-│   │   ├── get_scrumify_labels.sql   # Query labels to add via Scrumify
+│   │   ├── sqlbuilder.go             # SQL query builder
+│   │   ├── sqlbuilder_test.go        # Tests for sqlbuilder package
 ├── .env                              # Environmental variables
 ├── main.go                           # Main script
 ```

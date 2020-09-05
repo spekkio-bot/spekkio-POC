@@ -2,6 +2,12 @@
 
 Version log for Spekkio.
 
+## 0.2.1
+### New
+- Added SQL query builder
+### Modified
+- Deploy shell script no longer copies SQL queries directory to `bin/`
+
 ## 0.2.0
 ### New
 - Added Scrumify route / controller
