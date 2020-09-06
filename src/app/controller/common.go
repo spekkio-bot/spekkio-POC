@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/davyzhang/agw"
+	"github.com/park-junha/agw"
 )
 
 // GRAPHQL_API is the URL to GitHub's GraphQL API

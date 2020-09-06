@@ -2,6 +2,12 @@
 
 Version log for Spekkio.
 
+## 0.2.3
+### New
+- Added unit testing for controller package
+### Modified
+- Use personal fork of `github.com/davyzhang-agw` to support unit testing of `agw.WriteResponse`
+
 ## 0.2.2
 ### Modified
 - Fixed errors / warnings thrown by `gofmt -s` and `golint` on `v0.2.1`
