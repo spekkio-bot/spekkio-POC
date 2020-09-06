@@ -19,6 +19,7 @@ func sendJson(w http.ResponseWriter, status int, payload interface{}) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		agw.WriteResponse(w, []byte(err.Error()), false)
+		return
 	}
 	w.WriteHeader(status)
 	agw.WriteResponse(w, []byte(response), false)
