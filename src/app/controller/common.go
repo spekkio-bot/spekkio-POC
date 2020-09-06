@@ -2,10 +2,9 @@ package controller
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 
-	"github.com/davyzhang/agw"
+	"github.com/park-junha/agw"
 )
 
 // GRAPHQL_API is the URL to GitHub's GraphQL API
@@ -19,15 +18,8 @@ func sendJson(w http.ResponseWriter, status int, payload interface{}) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		agw.WriteResponse(w, []byte(err.Error()), false)
+		return
 	}
 	w.WriteHeader(status)
 	agw.WriteResponse(w, []byte(response), false)
-}
-
-func getSqlFrom(file string) (string, error) {
-	sql, err := ioutil.ReadFile(file)
-	if err != nil {
-		return "", err
-	}
-	return string(sql), nil
 }
