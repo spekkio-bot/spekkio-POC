@@ -7,6 +7,8 @@ Version log for Spekkio.
 - Added unit testing for controller package
 ### Modified
 - Use personal fork of `github.com/davyzhang-agw` to support unit testing of `agw.WriteResponse`
+### Removed
+- Removed unused `getSqlFrom()` common function
 
 ## 0.2.2
 ### Modified

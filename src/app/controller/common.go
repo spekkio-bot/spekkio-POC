@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/park-junha/agw"
@@ -23,12 +22,4 @@ func sendJson(w http.ResponseWriter, status int, payload interface{}) {
 	}
 	w.WriteHeader(status)
 	agw.WriteResponse(w, []byte(response), false)
-}
-
-func getSqlFrom(file string) (string, error) {
-	sql, err := ioutil.ReadFile(file)
-	if err != nil {
-		return "", err
-	}
-	return string(sql), nil
 }
