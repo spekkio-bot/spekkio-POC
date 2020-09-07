@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"bytes"
 	"errors"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -47,6 +49,42 @@ func TestGetNotFound(t *testing.T) {
 	if got != want {
 		t.Errorf("NotFound return unexpected body:\ngot %v\nwant %v\n", got, want)
 	}
+}
+
+func TestInitGraphqlRequest(t *testing.T) {
+	query := []byte("{}")
+	body := bytes.NewBuffer(query)
+	headers := make(map[string]string)
+	headers["Content-Type"] = "application/json"
+	headers["Authorization"] = "bearer 0123456789abcdef"
+	req, err := initGraphqlRequest(body, headers)
+
+	if err != nil {
+		t.Errorf("initGraphqlRequest returned unexpected error: %v\n", err.Error())
+	}
+
+	if req.Method != "POST" {
+		t.Errorf("initGraphqlRequest returned unexpected method:\ngot %v\nwant %v\n", req.Method, "POST")
+	}
+
+	reqBodyReadCloser, _ := req.GetBody()
+	reqBody, _ := ioutil.ReadAll(reqBodyReadCloser)
+	if string(reqBody) != "{}" {
+		t.Errorf("initGraphqlRequest returned unexpected body:\ngot %v\nwant %v\n", string(reqBody), "{}")
+	}
+
+	if len(req.Header["Content-Type"]) != 1 {
+		t.Errorf("initGraphqlRequest did not return correct number of headers: \"Content-Type\"\nreceived %v Content-Type headers\n", len(req.Header["Content-Type"]))
+	} else if req.Header["Content-Type"][0] != "application/json" {
+		t.Errorf("initGraphqlRequest did not return header: \"Content-Type: application/json\"\n")
+	}
+
+	if len(req.Header["Authorization"]) != 1 {
+		t.Errorf("initGraphqlRequest did not return correct number of headers: \"Authorization\"\nreceived %v Authorization headers\n", len(req.Header["Authorization"]))
+	} else if req.Header["Authorization"][0] != "bearer 0123456789abcdef" {
+		t.Errorf("initGraphqlRequest did not return header: \"Authorization: bearer 0123456789abcdef\"\n")
+	}
+
 }
 
 func TestSendJsonInvalidPayload(t *testing.T) {

@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.7
+### Modified
+- Created separate common functions for initializing GitHub GraphQL API request
+
 ## 0.2.6
 ### Modified
 - Created separate common functions for Spekkio error messages
