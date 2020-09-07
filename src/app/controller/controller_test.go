@@ -50,7 +50,7 @@ func TestGetNotFound(t *testing.T) {
 }
 
 func TestSendJsonInvalidPayload(t *testing.T) {
-	unmarshallable := func (invalid int) string {
+	unmarshallable := func(invalid int) string {
 		return "BAD"
 	}
 
