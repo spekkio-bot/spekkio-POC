@@ -19,13 +19,15 @@ const spekkio400 = "No cheating! I'm watching you!"
 const spekkio404 = "What do you want?"
 const spekkio500 = "GRRRR... That was most embarrassing!"
 
-func initGraphqlRequest(query io.Reader, headers map[string]string) (*http.Request, error) {
+func initGraphqlRequest(query io.Reader, headers map[string][]string) (*http.Request, error) {
 	req, err := http.NewRequest("POST", GRAPHQL_API, query)
 	if err != nil {
 		return nil, err
 	}
-	for header, headerValue := range headers {
-		req.Header.Add(header, headerValue)
+	for header, headerValues := range headers {
+		for _, headerValue := range headerValues {
+			req.Header.Add(header, headerValue)
+		}
 	}
 	return req, nil
 }

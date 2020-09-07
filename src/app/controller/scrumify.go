@@ -130,10 +130,16 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	var apiReq *http.Request
 	var apiResp *http.Response
 	apiClient := &http.Client{}
-	headers := make(map[string]string)
-	headers["Authorization"] = fmt.Sprintf("bearer %s", req.Token)
-	headers["Accept"] = LABEL_PREVIEW_HEADER
-	headers["Content-Type"] = "application/json"
+	headers := make(map[string][]string)
+	headers["Authorization"] = []string{
+		fmt.Sprintf("bearer %s", req.Token),
+	}
+	headers["Accept"] = []string{
+		LABEL_PREVIEW_HEADER,
+	}
+	headers["Content-Type"] = []string{
+		"application/json",
+	}
 
 	apiReq, err = initGraphqlRequest(gqlQuery, headers)
 	if err != nil {

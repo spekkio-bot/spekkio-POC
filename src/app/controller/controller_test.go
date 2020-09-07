@@ -54,9 +54,18 @@ func TestGetNotFound(t *testing.T) {
 func TestInitGraphqlRequest(t *testing.T) {
 	query := []byte("{}")
 	body := bytes.NewBuffer(query)
-	headers := make(map[string]string)
-	headers["Content-Type"] = "application/json"
-	headers["Authorization"] = "bearer 0123456789abcdef"
+	headers := make(map[string][]string)
+	headers["Content-Type"] = []string{
+		"application/json",
+	}
+	headers["Cache-Control"] = []string{
+		"no-cache",
+		"no-store",
+		"must-revalidate",
+	}
+	headers["Authorization"] = []string{
+		"bearer 0123456789abcdef",
+	}
 	req, err := initGraphqlRequest(body, headers)
 
 	if err != nil {
@@ -85,6 +94,15 @@ func TestInitGraphqlRequest(t *testing.T) {
 		t.Errorf("initGraphqlRequest did not return header: \"Authorization: bearer 0123456789abcdef\"\n")
 	}
 
+	if len(req.Header["Cache-Control"]) != 3 {
+		t.Errorf("initGraphqlRequest did not return correct number of headers: \"Cache-Control\"\nreceived %v Cache-Control headers\n", len(req.Header["Cache-Control"]))
+	} else {
+		for i, expectedHeader := range headers["Cache-Control"] {
+			if req.Header["Cache-Control"][i] != expectedHeader {
+				t.Errorf("initGraphqlRequest did not return header: \"Cache-Control: %v\"\ngot \"Cache-Control: %v\"\n", expectedHeader, req.Header["Cache-Control"][i])
+			}
+		}
+	}
 }
 
 func TestSendJsonInvalidPayload(t *testing.T) {
