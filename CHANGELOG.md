@@ -5,6 +5,7 @@ Version log for Spekkio.
 ## 0.2.3
 ### New
 - Added unit testing for controller package
+- Added build shell script that does not publish to AWS Lambda
 ### Modified
 - Use personal fork of `github.com/davyzhang-agw` to support unit testing of `agw.WriteResponse`
 ### Removed
