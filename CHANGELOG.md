@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.4
+### New
+- Added build shell script that does not publish to AWS Lambda
+
 ## 0.2.3
 ### New
 - Added unit testing for controller package
