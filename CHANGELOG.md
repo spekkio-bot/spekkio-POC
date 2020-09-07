@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.5
+### New
+- Added `controller_test.go` to `src/` README
+
 ## 0.2.4
 ### New
 - Added build shell script that does not publish to AWS Lambda
