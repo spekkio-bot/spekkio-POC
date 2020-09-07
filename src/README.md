@@ -8,6 +8,7 @@ This directory contains source code for the main Spekkio app.
 ├── app                               # App directory
 │   ├── controller                    # App controller
 │   │   ├── common.go                 # Common controller functions
+│   │   ├── controller_test.go        # Tests for controller package
 │   │   ├── index.go                  # Index route
 │   │   ├── notfound.go               # 404 handler
 │   │   ├── scrumify.go               # Scrumify route
