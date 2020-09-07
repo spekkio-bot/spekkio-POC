@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.6
+### Modified
+- Created separate common functions for Spekkio error messages
+
 ## 0.2.5
 ### New
 - Added `controller_test.go` to `src/` README
