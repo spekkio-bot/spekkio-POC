@@ -3,6 +3,7 @@ package controller
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -17,29 +18,17 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		res := model.Error{
-			Message: "What do you want?",
-			Error:   err.Error(),
-		}
-		sendJson(w, http.StatusBadRequest, res)
+		send400(w, err)
 		return
 	}
 
 	if req.RepoID == "" {
-		res := model.Error{
-			Message: "No cheating!",
-			Error:   "request body is missing repo_id property",
-		}
-		sendJson(w, http.StatusBadRequest, res)
+		send400(w, errors.New("request body is missing repo_id property"))
 		return
 	}
 
 	if req.Token == "" {
-		res := model.Error{
-			Message: "No cheating!",
-			Error:   "request body is missing token property",
-		}
-		sendJson(w, http.StatusBadRequest, res)
+		send400(w, errors.New("request body is missing token property"))
 		return
 	}
 
@@ -67,11 +56,7 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	}
 	query, err = scrumifyQueryProps.BuildQuery()
 	if err != nil {
-		res := model.Error{
-			Message: "GRRRR... That was most embarrassing!",
-			Error:   err.Error(),
-		}
-		sendJson(w, http.StatusInternalServerError, res)
+		send500(w, err)
 		return
 	}
 
@@ -79,11 +64,7 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	results, err = db.Query(query)
 
 	if err != nil {
-		res := model.Error{
-			Message: "GRRRR... That was most embarrassing!",
-			Error:   err.Error(),
-		}
-		sendJson(w, http.StatusInternalServerError, res)
+		send500(w, err)
 		return
 	}
 	defer results.Close()
@@ -142,11 +123,7 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 	gqlQuery, err := gql.Build()
 	if err != nil {
-		res := model.Error{
-			Message: "GRRRR... That was most embarrassing!",
-			Error:   err.Error(),
-		}
-		sendJson(w, http.StatusInternalServerError, res)
+		send500(w, err)
 		return
 	}
 
@@ -162,11 +139,7 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 	apiResp, err = apiClient.Do(apiReq)
 	if err != nil {
-		res := model.Error{
-			Message: "GRRRR... That was most embarrassing!",
-			Error:   err.Error(),
-		}
-		sendJson(w, http.StatusInternalServerError, res)
+		send500(w, err)
 		return
 	}
 
