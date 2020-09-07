@@ -42,7 +42,7 @@ func TestGetNotFound(t *testing.T) {
 		t.Errorf("NotFound returned wrong status code:\ngot %v\nwant %v\n", status, 404)
 	}
 
-	want := `{"message":"No cheating! I'm watching you!","error":"resource not found."}`
+	want := `{"message":"What do you want?","error":"resource not found."}`
 	got := rr.Body.String()
 	if got != want {
 		t.Errorf("NotFound return unexpected body:\ngot %v\nwant %v\n", got, want)
@@ -69,7 +69,7 @@ func TestSendJsonInvalidPayload(t *testing.T) {
 }
 
 func TestSend400(t *testing.T) {
-	err := errors.New("error is expected")
+	err := errors.New("400 error is expected")
 	rr := httptest.NewRecorder()
 	send400(rr, err)
 
@@ -77,15 +77,30 @@ func TestSend400(t *testing.T) {
 		t.Errorf("send400 returned wrong status code:\ngot %v\nwant %v\n", status, 400)
 	}
 
-	want := `{"message":"What do you want?","error":"error is expected"}`
+	want := `{"message":"No cheating! I'm watching you!","error":"400 error is expected"}`
 	got := rr.Body.String()
 	if got != want {
 		t.Errorf("send400 returned unexpected body:\ngot %v\nwant %v\n", got, want)
 	}
 }
 
+func TestSend404(t *testing.T) {
+	rr := httptest.NewRecorder()
+	send404(rr)
+
+	if status := rr.Code; status != 404 {
+		t.Errorf("send404 returned wrong status code:\ngot %v\nwant %v\n", status, 404)
+	}
+
+	want := `{"message":"What do you want?","error":"resource not found."}`
+	got := rr.Body.String()
+	if got != want {
+		t.Errorf("send404 returned unexpected body:\ngot %v\nwant %v\n", got, want)
+	}
+}
+
 func TestSend500(t *testing.T) {
-	err := errors.New("error is expected")
+	err := errors.New("500 error is expected")
 	rr := httptest.NewRecorder()
 	send500(rr, err)
 
@@ -93,7 +108,7 @@ func TestSend500(t *testing.T) {
 		t.Errorf("send500 returned wrong status code:\ngot %v\nwant %v\n", status, 500)
 	}
 
-	want := `{"message":"GRRRR... That was most embarrassing!","error":"error is expected"}`
+	want := `{"message":"GRRRR... That was most embarrassing!","error":"500 error is expected"}`
 	got := rr.Body.String()
 	if got != want {
 		t.Errorf("send500 returned unexpected body:\ngot %v\nwant %v\n", got, want)
