@@ -66,8 +66,8 @@ func (a *App) ConnectToDb() {
 
 // SetRoutes will initialize all the routes of the app.
 func (a *App) SetRoutes() {
-	a.Get("/", a.Ping)
-	a.Post("/scrumify", a.Scrumify)
+	a.Get("/", "Ping", a.Ping)
+	a.Post("/scrumify", "Scrumify", a.Scrumify)
 	a.Router.NotFoundHandler = http.HandlerFunc(controller.NotFound)
 }
 
@@ -77,13 +77,13 @@ func (a *App) SetMiddleware() {
 }
 
 // Get is a wrapper for resources requested with GET.
-func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
-	a.Router.HandleFunc(path, f).Methods("GET")
+func (a *App) Get(path string, name string, f func(w http.ResponseWriter, r *http.Request)) {
+	a.Router.HandleFunc(path, f).Methods("GET").Name(name)
 }
 
 // Post is a wrapper for resources requested with POST.
-func (a *App) Post(path string, f func(w http.ResponseWriter, r *http.Request)) {
-	a.Router.HandleFunc(path, f).Methods("POST")
+func (a *App) Post(path string, name string, f func(w http.ResponseWriter, r *http.Request)) {
+	a.Router.HandleFunc(path, f).Methods("POST").Name(name)
 }
 
 // Ping calls the Ping controller.

@@ -3,6 +3,8 @@ package app
 import (
 	"os"
 	"testing"
+
+	"github.com/gorilla/mux"
 )
 
 func setEnvDefaultVars() {
@@ -132,5 +134,26 @@ func TestAppConfigLoadDefaults(t *testing.T) {
 	}
 	if db != wantDb {
 		t.Errorf("GetAddr() returned unexpected server address\n\ngot %v\nexpected %v\n", db, wantDb)
+	}
+}
+
+func TestAppRouter(t *testing.T) {
+	app := &App{
+		Config: &AppConfig{},
+	}
+
+	setEnvVars()
+	app.Config.Load()
+
+	app.Router = mux.NewRouter()
+	app.SetRoutes()
+	if app.Router.Get("Ping") == nil {
+		t.Errorf("Router did not register Ping route\n")
+	}
+	if app.Router.Get("Scrumify") == nil {
+		t.Errorf("Router did not register Scrumify route\n")
+	}
+	if app.Router.NotFoundHandler == nil {
+		t.Errorf("Router did not register NotFoundHandler\n")
 	}
 }
