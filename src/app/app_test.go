@@ -81,7 +81,7 @@ func TestAppConfigLoad(t *testing.T) {
 		t.Errorf("GetAddr() returned unexpected server address\n\ngot %v\nexpected %v\n", ip, wantIp)
 	}
 	if db != wantDb {
-		t.Errorf("GetAddr() returned unexpected server address\n\ngot %v\nexpected %v\n", db, wantDb)
+		t.Errorf("GetInfo() returned unexpected database info\n\ngot %v\nexpected %v\n", db, wantDb)
 	}
 }
 
@@ -133,7 +133,7 @@ func TestAppConfigLoadDefaults(t *testing.T) {
 		t.Errorf("GetAddr() returned unexpected server address\n\ngot %v\nexpected %v\n", ip, wantIp)
 	}
 	if db != wantDb {
-		t.Errorf("GetAddr() returned unexpected server address\n\ngot %v\nexpected %v\n", db, wantDb)
+		t.Errorf("GetInfo() returned unexpected database info\n\ngot %v\nexpected %v\n", db, wantDb)
 	}
 }
 
