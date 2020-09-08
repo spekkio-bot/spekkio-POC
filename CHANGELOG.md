@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.8
+### Modified
+- Replaced personal fork of `github.com/davyzhang-agw` with updated master copy (main repository now supports `httptest.ResponseRecorder` within `agw.WriteResponse`)
+
 ## 0.2.7
 ### Modified
 - Created separate common functions for initializing GitHub GraphQL API request

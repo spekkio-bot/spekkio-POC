@@ -7,6 +7,8 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davyzhang/agw v0.0.0-20200326005711-9a7972ffa95f h1:ORYxqsTvENvTrwb8FQqKDdkOsmkmGQxFq4RwZUp6PS8=
 github.com/davyzhang/agw v0.0.0-20200326005711-9a7972ffa95f/go.mod h1:s9rXZg60VuVW0tAALBP/2ijJpAKl85UDLOPnsFfslJY=
+github.com/davyzhang/agw v0.0.0-20200908000401-cd09bf93af20 h1:eWrhQyxF9LPDwSm0OmU28ZniPvZdcUosSpIOIPhPOs0=
+github.com/davyzhang/agw v0.0.0-20200908000401-cd09bf93af20/go.mod h1:s9rXZg60VuVW0tAALBP/2ijJpAKl85UDLOPnsFfslJY=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/gorilla/handlers v1.4.2 h1:0QniY0USkHQ1RGCLfKxeNHK9bkDHGRYGNDFBCS+YARg=
 github.com/gorilla/handlers v1.4.2/go.mod h1:Qkdc/uu4tH4g6mTK6auzZ766c4CA0Ng8+o/OAirnOIQ=
