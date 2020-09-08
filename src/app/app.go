@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/davyzhang/agw"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq" // postgres database connection requires postgres driver
-	"github.com/park-junha/agw"
 	"github.com/spekkio-bot/spekkio/src/app/controller"
 )
 

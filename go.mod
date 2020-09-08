@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/aws/aws-lambda-go v1.19.0
+	github.com/davyzhang/agw v0.0.0-20200908000401-cd09bf93af20
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.7.4
 	github.com/joho/godotenv v1.3.0
