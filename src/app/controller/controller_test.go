@@ -20,13 +20,13 @@ func TestGetPing(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != 200 {
-		t.Errorf("NotFound returned wrong status code:\ngot %v\nwant %v\n", status, 200)
+		t.Errorf("Ping returned wrong status code:\ngot %v\nwant %v\n", status, 200)
 	}
 
 	want := `{"message":"Request successful."}`
 	got := rr.Body.String()
 	if got != want {
-		t.Errorf("NotFound return unexpected body:\ngot %v\nwant %v\n", got, want)
+		t.Errorf("Ping returned unexpected body:\ngot %v\nwant %v\n", got, want)
 	}
 }
 
@@ -47,7 +47,7 @@ func TestGetNotFound(t *testing.T) {
 	want := `{"message":"What do you want?","error":"resource not found."}`
 	got := rr.Body.String()
 	if got != want {
-		t.Errorf("NotFound return unexpected body:\ngot %v\nwant %v\n", got, want)
+		t.Errorf("NotFound returned unexpected body:\ngot %v\nwant %v\n", got, want)
 	}
 }
 
