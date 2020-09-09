@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.9
+### Modified
+- Fixed typos in controller test error logs
+
 ## 0.2.8
 ### Modified
 - Replaced personal fork of `github.com/davyzhang-agw` with updated master copy (main repository now supports `httptest.ResponseRecorder` within `agw.WriteResponse`)
