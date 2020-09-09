@@ -1,9 +1,12 @@
 package app
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gorilla/mux"
 )
 
@@ -31,6 +34,12 @@ func setEnvVars() {
 	os.Setenv("DB_SSLMODE", "require")
 	os.Setenv("ORIGINS_ALLOWED", "*")
 	os.Setenv("PLATFORM", "default")
+}
+
+func (a *App) runTestRequest(req *http.Request) *httptest.ResponseRecorder {
+	rr := httptest.NewRecorder()
+	a.Router.ServeHTTP(rr, req)
+	return rr
 }
 
 func TestAppConfigLoad(t *testing.T) {
@@ -155,5 +164,40 @@ func TestAppRouter(t *testing.T) {
 	}
 	if app.Router.NotFoundHandler == nil {
 		t.Errorf("Router did not register NotFoundHandler\n")
+	}
+
+	var err error
+	//var mock sqlmock.Sqlmock
+	app.Db, _, err = sqlmock.New()
+	if err != nil {
+		t.Fatalf("encountered error %s while initializing mock database\n", err)
+	}
+	defer app.Db.Close()
+	app.SetMiddleware()
+
+	reqPing, _ := http.NewRequest("GET", "/", nil)
+	reqNotFound, _ := http.NewRequest("GET", "/asdfghjkl", nil)
+
+	respPing := app.runTestRequest(reqPing)
+	respNotFound := app.runTestRequest(reqNotFound)
+
+	if statusPing := respPing.Code; statusPing != 200 {
+		t.Errorf("Ping returned wrong status code:\ngot %v\nwant %v\n", statusPing, 200)
+	}
+
+	wantPing := `{"message":"Request successful."}`
+	gotPing := respPing.Body.String()
+	if gotPing != wantPing {
+		t.Errorf("Ping return unexpected body:\ngot %v\nwant %v\n", gotPing, wantPing)
+	}
+
+	if statusNotFound := respNotFound.Code; statusNotFound != 404 {
+		t.Errorf("NotFound returned wrong status code:\ngot %v\nwant %v\n", statusNotFound, 404)
+	}
+
+	wantNotFound := `{"message":"What do you want?","error":"resource not found."}`
+	gotNotFound := respNotFound.Body.String()
+	if gotNotFound != wantNotFound {
+		t.Errorf("NotFound return unexpected body:\ngot %v\nwant %v\n", gotNotFound, wantNotFound)
 	}
 }
