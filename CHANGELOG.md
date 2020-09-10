@@ -2,6 +2,12 @@
 
 Version log for Spekkio.
 
+## 0.2.11
+### New
+- Added tests for `(m *Mutations) Build()` in gqlbuilder
+### Removed
+- Removed json marshal error check from Build()
+
 ## 0.2.10
 ### New
 - Added tests for app package

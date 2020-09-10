@@ -42,12 +42,7 @@ func (m *Mutations) Build() (io.Reader, error) {
 	}
 
 	var encoded []byte
-	encoded, err = json.Marshal(req)
-	if err != nil {
-		var nilSlice []byte
-		return bytes.NewBuffer(nilSlice), err
-	}
-
+	encoded, _ = json.Marshal(req)
 	return bytes.NewBuffer(encoded), nil
 }
 
