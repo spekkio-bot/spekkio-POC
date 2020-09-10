@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.12
+### Modified
+- Replaced lines 80-84 of scrumify.go with send500
+
 ## 0.2.11
 ### New
 - Added tests for `(m *Mutations) Build()` in gqlbuilder
