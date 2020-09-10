@@ -168,7 +168,7 @@ func TestAppRouter(t *testing.T) {
 
 	var err error
 	//var mock sqlmock.Sqlmock
-	app.Db, _, err = sqlmock.New()
+	app.Db, _, err = sqlmock.New() // TODO: make use of sqlmock?
 	if err != nil {
 		t.Fatalf("encountered error %s while initializing mock database\n", err)
 	}
