@@ -77,11 +77,7 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 			&label.Color,
 			&label.Description)
 		if err != nil {
-			res := model.Error{
-				Message: "GRRRR... That was most embarrassing!",
-				Error:   err.Error(),
-			}
-			sendJson(w, http.StatusInternalServerError, res)
+			send500(w, err)
 			return
 		}
 		labels = append(labels, label)
