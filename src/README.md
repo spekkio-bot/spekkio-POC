@@ -15,6 +15,7 @@ This directory contains source code for the main Spekkio app.
 │   ├── model                         # App models
 │   │   ├── models.go                 # Models for app data
 │   ├── app.go                        # Top-level app source code
+│   ├── app_test.go                   # Tests for app package
 │   ├── middleware.go                 # Middleware for app handlers
 │   ├── config.go                     # Functions to configure the app
 ├── queries                           # Queries to be used by the app

@@ -3,6 +3,7 @@ module github.com/spekkio-bot/spekkio
 go 1.14
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/aws/aws-lambda-go v1.19.0
 	github.com/davyzhang/agw v0.0.0-20200908000401-cd09bf93af20
 	github.com/gorilla/handlers v1.4.2

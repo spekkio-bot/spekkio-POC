@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.10
+### New
+- Added tests for app package
+
 ## 0.2.9
 ### Modified
 - Fixed typos in controller test error logs
