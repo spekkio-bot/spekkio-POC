@@ -54,6 +54,12 @@ elif [[ $# -eq 1 ]]; then
             exit $rc
         fi
         ;;
+    t | test)
+        stamp=$(date +"%s")
+        output=/tmp/$stamp.out
+        go test -v ./... -coverprofile=$output
+        go tool cover -html=$output
+        ;;
     *)
         echo "Invalid options."
         exit 1

@@ -21,6 +21,10 @@ To run the app, simply run `./run.sh`. You will need to do some [setup](https://
 
 You can also navigate to `src/` and directly build / run the app there.
 
+### `./run.sh t`, `./run.sh test`
+
+This will run all unit tests, print your test results on the console, and open a test coverage report on your browser.
+
 ### `./run.sh d`, `./run.sh deploy`
 
 You can deploy the app to AWS Lambda with `./deploy.sh` - in a nutshell, this script will first build your app to `bin/`, then deploy your executable app to AWS if it built successfully.
