@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/DATA-DOG/go-sqlmock"
 )
 
 func TestGetPing(t *testing.T) {
@@ -48,6 +50,113 @@ func TestGetNotFound(t *testing.T) {
 	got := rr.Body.String()
 	if got != want {
 		t.Errorf("NotFound returned unexpected body:\ngot %v\nwant %v\n", got, want)
+	}
+}
+
+func scrumifyTestWrapper(w http.ResponseWriter, r *http.Request) {
+	db, mock, _ := sqlmock.New()
+	defer db.Close()
+
+	rows := sqlmock.NewRows([]string{"id", "name", "color", "description"}).
+		AddRow(1, "Defect", "ff0000", "Something is not working").
+		AddRow(2, "Story", "00ffff", "New feature")
+
+	mock.ExpectQuery("^SELECT (.+) FROM ScrumifyLabels").
+		WillReturnRows(rows)
+
+	Scrumify(db, w, r)
+}
+
+func TestPostScrumify(t *testing.T) {
+	reqBodyBytes := []byte("{\"repo_id\":\"123\",\"token\":\"321\"}")
+	reqBody := bytes.NewBuffer(reqBodyBytes)
+
+	req, err := http.NewRequest("POST", "/scrumify", reqBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(scrumifyTestWrapper)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != 200 {
+		t.Errorf("Scrumify returned wrong status code:\ngot %v\nwant %v\n", status, 200)
+	}
+
+	want := `{"message":"Ipso facto, meeny moe... MAGICO! Your repository was successfully scrumified!"}`
+	got := rr.Body.String()
+	if got != want {
+		t.Errorf("Scrumify returned unexpected body:\ngot %v\nwant %v\n", got, want)
+	}
+}
+
+func TestPostScrumifyNoToken(t *testing.T) {
+	reqBodyBytes := []byte("{\"repo_id\":\"notoken\"}")
+	reqBody := bytes.NewBuffer(reqBodyBytes)
+
+	req, err := http.NewRequest("POST", "/scrumify", reqBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(scrumifyTestWrapper)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != 400 {
+		t.Errorf("Scrumify (no token) returned wrong status code:\ngot %v\nwant %v\n", status, 400)
+	}
+
+	want := `{"message":"No cheating! I'm watching you!","error":"request body is missing token property"}`
+	got := rr.Body.String()
+	if got != want {
+		t.Errorf("Scrumify (no token) returned unexpected body:\ngot %v\nwant %v\n", got, want)
+	}
+}
+
+func TestPostScrumifyNoRepoId(t *testing.T) {
+	reqBodyBytes := []byte("{\"token\":\"norepoid\"}")
+	reqBody := bytes.NewBuffer(reqBodyBytes)
+
+	req, err := http.NewRequest("POST", "/scrumify", reqBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(scrumifyTestWrapper)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != 400 {
+		t.Errorf("Scrumify (no repo id) returned wrong status code:\ngot %v\nwant %v\n", status, 400)
+	}
+
+	want := `{"message":"No cheating! I'm watching you!","error":"request body is missing repo_id property"}`
+	got := rr.Body.String()
+	if got != want {
+		t.Errorf("Scrumify (no repo id) returned unexpected body:\ngot %v\nwant %v\n", got, want)
+	}
+}
+
+func TestPostScrumifyEmpty(t *testing.T) {
+	req, err := http.NewRequest("POST", "/scrumify", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(scrumifyTestWrapper)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != 400 {
+		t.Errorf("Scrumify (empty body) returned wrong status code:\ngot %v\nwant %v\n", status, 400)
+	}
+
+	want := `{"message":"No cheating! I'm watching you!","error":"request body is empty"}`
+	got := rr.Body.String()
+	if got != want {
+		t.Errorf("Scrumify (empty body) returned unexpected body:\ngot %v\nwant %v\n", got, want)
 	}
 }
 

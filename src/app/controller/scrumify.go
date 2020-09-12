@@ -16,9 +16,14 @@ import (
 func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	var req model.ScrumifyRequest
 
+	if r.Body == nil {
+		send400(w, errors.New("request body is empty"))
+		return
+	}
+
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		send400(w, err)
+		send500(w, err)
 		return
 	}
 
