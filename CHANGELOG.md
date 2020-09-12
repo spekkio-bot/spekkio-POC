@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.14
+### Modified
+- Combined shell scripts into one script
+
 ## 0.2.13
 ### New
 - Added tests for Scrumify controller and usage in app
