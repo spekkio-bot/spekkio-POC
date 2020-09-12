@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.13
+### New
+- Added tests for Scrumify controller and usage in app
+
 ## 0.2.12
 ### Modified
 - Replaced lines 80-84 of scrumify.go with send500

@@ -176,10 +176,12 @@ func TestAppRouter(t *testing.T) {
 	app.SetMiddleware()
 
 	reqPing, _ := http.NewRequest("GET", "/", nil)
+	reqScrumify, _ := http.NewRequest("POST", "/scrumify", nil)
 	reqNotFound, _ := http.NewRequest("GET", "/asdfghjkl", nil)
 
 	respPing := app.runTestRequest(reqPing)
 	respNotFound := app.runTestRequest(reqNotFound)
+	respScrumify := app.runTestRequest(reqScrumify)
 
 	if statusPing := respPing.Code; statusPing != 200 {
 		t.Errorf("Ping returned wrong status code:\ngot %v\nwant %v\n", statusPing, 200)
@@ -189,6 +191,16 @@ func TestAppRouter(t *testing.T) {
 	gotPing := respPing.Body.String()
 	if gotPing != wantPing {
 		t.Errorf("Ping return unexpected body:\ngot %v\nwant %v\n", gotPing, wantPing)
+	}
+
+	if statusScrumify := respScrumify.Code; statusScrumify != 400 {
+		t.Errorf("Scrumify returned wrong status code:\ngot %v\nwant %v\n", statusScrumify, 400)
+	}
+
+	wantScrumify := `{"message":"No cheating! I'm watching you!","error":"request body is empty"}`
+	gotScrumify := respScrumify.Body.String()
+	if gotScrumify != wantScrumify {
+		t.Errorf("Scrumify returned unexpected body:\ngot %v\nwant %v\n", gotScrumify, wantScrumify)
 	}
 
 	if statusNotFound := respNotFound.Code; statusNotFound != 404 {
