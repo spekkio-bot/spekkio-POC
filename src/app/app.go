@@ -69,6 +69,7 @@ func (a *App) SetRoutes() {
 	a.Get("/", "Ping", a.Ping)
 	a.Post("/scrumify", "Scrumify", a.Scrumify)
 	a.Router.NotFoundHandler = http.HandlerFunc(controller.NotFound)
+	a.Router.MethodNotAllowedHandler = http.HandlerFunc(controller.MethodNotAllowed)
 }
 
 // SetMiddleware will initialize middleware handlers for the router.

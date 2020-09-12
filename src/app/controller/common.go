@@ -17,6 +17,7 @@ const LABEL_PREVIEW_HEADER = "application/vnd.github.bane-preview+json"
 
 const spekkio400 = "No cheating! I'm watching you!"
 const spekkio404 = "What do you want?"
+const spekkio405 = "No cheating!"
 const spekkio500 = "GRRRR... That was most embarrassing!"
 
 func initGraphqlRequest(query io.Reader, headers map[string][]string) (*http.Request, error) {
@@ -57,6 +58,14 @@ func send404(w http.ResponseWriter) {
 		Error:   "resource not found.",
 	}
 	sendJson(w, http.StatusNotFound, res)
+}
+
+func send405(w http.ResponseWriter) {
+	res := model.Error{
+		Message: spekkio405,
+		Error:   "method not allowed.",
+	}
+	sendJson(w, http.StatusMethodNotAllowed, res)
 }
 
 func send500(w http.ResponseWriter, err error) {

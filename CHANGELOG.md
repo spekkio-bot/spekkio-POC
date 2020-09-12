@@ -2,6 +2,12 @@
 
 Version log for Spekkio.
 
+## 0.2.15
+### New
+- Added handler for 405 response
+### Modified
+- Renamed notfound.go to 404.go
+
 ## 0.2.14
 ### Modified
 - Combined shell scripts into one script

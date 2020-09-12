@@ -53,6 +53,27 @@ func TestGetNotFound(t *testing.T) {
 	}
 }
 
+func TestMethodNotAllowed(t *testing.T) {
+	req, err := http.NewRequest("DELETE", "/", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(MethodNotAllowed)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != 405 {
+		t.Errorf("MethodNotAllowed returned wrong status code:\ngot %v\nwant %v\n", status, 405)
+	}
+
+	want := `{"message":"No cheating!","error":"method not allowed."}`
+	got := rr.Body.String()
+	if got != want {
+		t.Errorf("MethodNotAllowed returned unexpected body:\ngot %v\nwant %v\n", got, want)
+	}
+}
+
 func scrumifyTestWrapper(w http.ResponseWriter, r *http.Request) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()

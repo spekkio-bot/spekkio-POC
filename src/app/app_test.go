@@ -165,6 +165,9 @@ func TestAppRouter(t *testing.T) {
 	if app.Router.NotFoundHandler == nil {
 		t.Errorf("Router did not register NotFoundHandler\n")
 	}
+	if app.Router.MethodNotAllowedHandler == nil {
+		t.Errorf("Router did not register MethodNotAllowedHandler\n")
+	}
 
 	var err error
 	//var mock sqlmock.Sqlmock
@@ -178,10 +181,12 @@ func TestAppRouter(t *testing.T) {
 	reqPing, _ := http.NewRequest("GET", "/", nil)
 	reqScrumify, _ := http.NewRequest("POST", "/scrumify", nil)
 	reqNotFound, _ := http.NewRequest("GET", "/asdfghjkl", nil)
+	reqMethodNotAllowed, _ := http.NewRequest("DELETE", "/", nil)
 
 	respPing := app.runTestRequest(reqPing)
 	respNotFound := app.runTestRequest(reqNotFound)
 	respScrumify := app.runTestRequest(reqScrumify)
+	respMethodNotAllowed := app.runTestRequest(reqMethodNotAllowed)
 
 	if statusPing := respPing.Code; statusPing != 200 {
 		t.Errorf("Ping returned wrong status code:\ngot %v\nwant %v\n", statusPing, 200)
@@ -201,6 +206,16 @@ func TestAppRouter(t *testing.T) {
 	gotScrumify := respScrumify.Body.String()
 	if gotScrumify != wantScrumify {
 		t.Errorf("Scrumify returned unexpected body:\ngot %v\nwant %v\n", gotScrumify, wantScrumify)
+	}
+
+	if statusMethodNotAllowed := respMethodNotAllowed.Code; statusMethodNotAllowed != 405 {
+		t.Errorf("MethodNotAllowed returned wrong status code:\ngot %v\nwant %v\n", statusMethodNotAllowed, 405)
+	}
+
+	wantMethodNotAllowed := `{"message":"No cheating!","error":"method not allowed."}`
+	gotMethodNotAllowed := respMethodNotAllowed.Body.String()
+	if gotMethodNotAllowed != wantMethodNotAllowed {
+		t.Errorf("NotFound return unexpected body:\ngot %v\nwant %v\n", gotMethodNotAllowed, wantMethodNotAllowed)
 	}
 
 	if statusNotFound := respNotFound.Code; statusNotFound != 404 {
