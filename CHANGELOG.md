@@ -2,6 +2,10 @@
 
 Version log for Spekkio.
 
+## 0.2.16
+### New
+- Added test flag to shell script
+
 ## 0.2.15
 ### New
 - Added handler for 405 response
