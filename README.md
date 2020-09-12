@@ -15,17 +15,21 @@ Listed below are related repositories for Spekkio:
 
 ## Available Scripts
 
-### `run.sh`
+### `./run.sh`
 
 To run the app, simply run `./run.sh`. You will need to do some [setup](https://github.com/spekkio-bot/spekkio/blob/master/src/README.md#first-time-setup) before you can run the app.
 
 You can also navigate to `src/` and directly build / run the app there.
 
-### `deploy.sh`
+### `./run.sh d`, `./run.sh deploy`
 
 You can deploy the app to AWS Lambda with `./deploy.sh` - in a nutshell, this script will first build your app to `bin/`, then deploy your executable app to AWS if it built successfully.
 
 Deploy settings are determined by `serverless.yml`.
+
+### `./run.sh b`, `./run.sh build`
+
+If you wish, you may choose to build a Linux/AMD64 binary without deploying to test if the app builds properly.
 
 ## License
 
