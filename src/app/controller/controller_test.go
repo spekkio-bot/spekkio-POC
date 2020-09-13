@@ -101,11 +101,12 @@ func TestPostScrumify(t *testing.T) {
 	handler := http.HandlerFunc(scrumifyTestWrapper)
 	handler.ServeHTTP(rr, req)
 
-	if status := rr.Code; status != 200 {
-		t.Errorf("Scrumify returned wrong status code:\ngot %v\nwant %v\n", status, 200)
+	if status := rr.Code; status != 401 {
+		t.Errorf("Scrumify returned wrong status code:\ngot %v\nwant %v\n", status, 401)
 	}
 
-	want := `{"message":"Ipso facto, meeny moe... MAGICO! Your repository was successfully scrumified!"}`
+	//want := `{"message":"Ipso facto, meeny moe... MAGICO! Your repository was successfully scrumified!"}`
+	want := `{"message":"No cheating!","error":"unauthorized."}`
 	got := rr.Body.String()
 	if got != want {
 		t.Errorf("Scrumify returned unexpected body:\ngot %v\nwant %v\n", got, want)

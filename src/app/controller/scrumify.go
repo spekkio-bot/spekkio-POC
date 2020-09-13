@@ -155,7 +155,7 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: handle various api responses
-	if apiResp.Status == http.StatusUnauthorized {
+	if apiResp.StatusCode == http.StatusUnauthorized {
 		send401(w)
 		return
 	}

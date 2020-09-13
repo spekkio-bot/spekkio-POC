@@ -57,7 +57,7 @@ func send401(w http.ResponseWriter) {
 		Message: spekkioBadClient,
 		Error:   "unauthorized.",
 	}
-	sendJson(w, http.StatusBadRequest, res)
+	sendJson(w, http.StatusUnauthorized, res)
 }
 
 func send404(w http.ResponseWriter) {
