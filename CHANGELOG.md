@@ -2,6 +2,11 @@
 
 Version log for Spekkio.
 
+## 0.2.17
+### New
+- Added 401 helper function
+- Handle unauthorized tokens in Scrumify
+
 ## 0.2.16
 ### New
 - Added test flag to shell script

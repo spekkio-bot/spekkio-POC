@@ -155,7 +155,10 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: handle various api responses
-	fmt.Println(apiResp.Status)
+	if apiResp.Status == http.StatusUnauthorized {
+		send401(w)
+		return
+	}
 
 	res := model.Ping{
 		Message: "Ipso facto, meeny moe... MAGICO! Your repository was successfully scrumified!",
