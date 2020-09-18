@@ -6,6 +6,7 @@ Version log for Spekkio.
 ### New
 - Added 401 helper function
 - Handle unauthorized tokens in Scrumify
+- Scrumify now returns GitHub API response on success
 
 ## 0.2.16
 ### New

@@ -18,7 +18,8 @@ type ScrumifyRequest struct {
 
 // ScrumifyResponse dictates how the response body of the Scrumify resource should be structured.
 type ScrumifyResponse struct {
-	Message string `json:"message"`
+	Message  string `json:"message"`
+	Response string `json:"github_response"`
 }
 
 // ScrumifyQueryResponse dictates how the ScrumifyLabels query response should be structured.
