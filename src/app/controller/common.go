@@ -21,10 +21,7 @@ const spekkio500 = "GRRRR... That was most embarrassing!"
 const spekkioBadClient = "No cheating!"
 
 func initGraphqlRequest(query io.Reader, headers map[string][]string) (*http.Request, error) {
-	req, err := http.NewRequest("POST", GRAPHQL_API, query)
-	if err != nil {
-		return nil, err
-	}
+	req, _ := http.NewRequest("POST", GRAPHQL_API, query)
 	for header, headerValues := range headers {
 		for _, headerValue := range headerValues {
 			req.Header.Add(header, headerValue)
