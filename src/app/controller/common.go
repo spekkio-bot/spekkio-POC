@@ -17,14 +17,11 @@ const LABEL_PREVIEW_HEADER = "application/vnd.github.bane-preview+json"
 
 const spekkio400 = "No cheating! I'm watching you!"
 const spekkio404 = "What do you want?"
-const spekkio405 = "No cheating!"
 const spekkio500 = "GRRRR... That was most embarrassing!"
+const spekkioBadClient = "No cheating!"
 
 func initGraphqlRequest(query io.Reader, headers map[string][]string) (*http.Request, error) {
-	req, err := http.NewRequest("POST", GRAPHQL_API, query)
-	if err != nil {
-		return nil, err
-	}
+	req, _ := http.NewRequest("POST", GRAPHQL_API, query)
 	for header, headerValues := range headers {
 		for _, headerValue := range headerValues {
 			req.Header.Add(header, headerValue)
@@ -52,6 +49,14 @@ func send400(w http.ResponseWriter, err error) {
 	sendJson(w, http.StatusBadRequest, res)
 }
 
+func send401(w http.ResponseWriter) {
+	res := model.Error{
+		Message: spekkioBadClient,
+		Error:   "unauthorized.",
+	}
+	sendJson(w, http.StatusUnauthorized, res)
+}
+
 func send404(w http.ResponseWriter) {
 	res := model.Error{
 		Message: spekkio404,
@@ -62,7 +67,7 @@ func send404(w http.ResponseWriter) {
 
 func send405(w http.ResponseWriter) {
 	res := model.Error{
-		Message: spekkio405,
+		Message: spekkioBadClient,
 		Error:   "method not allowed.",
 	}
 	sendJson(w, http.StatusMethodNotAllowed, res)

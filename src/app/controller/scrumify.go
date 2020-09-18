@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/spekkio-bot/spekkio/src/app/model"
@@ -154,11 +155,20 @@ func Scrumify(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: handle various api responses
-	fmt.Println(apiResp.Status)
+	if apiResp.StatusCode == http.StatusUnauthorized {
+		send401(w)
+		return
+	} else if apiResp.StatusCode != http.StatusOK {
+		errUnexpectedStatus := fmt.Sprintf("received unexpected status code %d from github graphql api", apiResp.StatusCode)
+		send500(w, errors.New(errUnexpectedStatus))
+		return
+	}
 
-	res := model.Ping{
-		Message: "Ipso facto, meeny moe... MAGICO! Your repository was successfully scrumified!",
+	apiRespBody, _ := ioutil.ReadAll(apiResp.Body)
+
+	res := model.ScrumifyResponse{
+		Message:  "Ipso facto, meeny moe... MAGICO! Your repository was successfully scrumified!",
+		Response: string(apiRespBody),
 	}
 
 	sendJson(w, http.StatusOK, res)
